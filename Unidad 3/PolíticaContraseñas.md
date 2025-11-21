@@ -20,6 +20,8 @@ sudo nano /etc/pam.d/common-password
 
 Busca la línea que contiene `pam_unix.so` y añade al final el parámetro:
 
+Si no estalado instalalo con : apt install libpam-pwquality libpwquality-tools
+
 ```bash
 minlen=8
 ```
@@ -35,6 +37,13 @@ password    requisite     pam_unix.so nullok obscure sha512 minlen=8
 > ```bash
 > password requisite pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 ocredit=-1
 > ```
+
+
+comprobar agregando contraseñas
+
+y metiendo timepo de expiración
+
+passwd -x 30 nombreusuario
 
 ---
 
@@ -76,15 +85,10 @@ Puedes verificar el estado actual con:
 sudo chage -l prometeo
 ```
 
-O de forma alternativa:
-
-```bash
-sudo passwd -S prometeo
-```
 
 > ⚠️ Nota: Estas restricciones solo aplican cuando el cambio de contraseña lo realiza un **usuario no privilegiado**.
 > El usuario **root** puede establecer cualquier contraseña sin limitaciones.
-
+logins
 ---
 
 ## 🧩 4. Ejemplo práctico
@@ -125,8 +129,8 @@ El sistema debería **rechazarla** si no cumple con la política establecida.
 
 ## 🧠 Recomendaciones 
 
-* Utiliza **contraseñas de al menos 12 caracteres**, con letras mayúsculas, minúsculas, números y símbolos.
-* Considera activar **bloqueo de cuenta temporal** tras varios intentos fallidos mediante `pam_tally2` o `pam_faillock`.
+* Utiliza **contraseñas de al menos 8 caracteres**, con letras mayúsculas, minúsculas, números y símbolos.
+* Considera activar **bloqueo de cuenta temporal** tras varios intentos fallidos mediante `/ect/security/faillock.conf`.
 * Documenta las políticas en `/etc/security/` o en tu sistema de gestión de usuarios centralizado.
 
 ```
