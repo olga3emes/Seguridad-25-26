@@ -93,7 +93,7 @@ Pega este contenido:
 USER="root"
 PASSWORD="tu_contraseña"
 BACKUP_DIR="/var/backups/mysql"
-DATE=$(date +'%Y-%m-%d_%H-%M-%S')
+DATE=$(date +%Y-%m-%d_%H-%M-%S)
 
 # Crear carpeta si no existe
 mkdir -p "$BACKUP_DIR"
