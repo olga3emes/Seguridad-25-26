@@ -1,153 +1,118 @@
-#  **Práctica: Auditoría de Contraseñas con John the Ripper (Jumbo Build)**
-
-**Duración estimada:** 1.5–2 horas
-**Nivel:** Principiante – Intermedio
-**Objetivo general:**
-Los alumnos aprenderán a identificar, extraer y auditar hashes de contraseñas utilizando diferentes modos de ataque en John the Ripper.
-
----
-
-#  **Escenario**
-
-Una empresa te contrata para realizar una **auditoría de contraseñas** de varias fuentes:
-
-* usuarios locales del sistema
-* archivo ZIP protegido
-* base de datos con hashes de aplicaciones web
-* un hash NTLM entregado por el equipo de redes
-
-Tu misión: **recuperar tantas contraseñas como sea posible** y redactar un informe técnico.
-
----
-
-#  **Parte 1 — Extracción de Hashes del Sistema**
-
-1. Usa `unshadow` para combinar passwd y shadow:
-
-   ```bash
-   unshadow passwd shadow > hashes_sistema.txt
-   ```
-
-2. Ejecuta un ataque **Single**:
-
-   ```bash
-   john --single hashes_sistema.txt
-   ```
-
-3. Revisa resultados:
-
-   ```bash
-   john --show hashes_sistema.txt
-   ```
-
-### **Preguntas a responder**
-
-* ¿Qué contraseñas se recuperaron?
-* ¿Por qué funciona tan bien el modo *single*?
-
----
-
-# **Parte 2 — Ataque con Wordlist a hashes variados**
-
-1. Verifica formato:
-
-   ```bash
-   john --list=formats
-   ```
-
-2. Lanza un ataque con diccionario:
-
-   ```bash
-   john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt
-   ```
-
-3. Vuelve a revisar resultados:
-
-   ```bash
-   john --show hashes.txt
-   ```
-
-### **Preguntas**
-
-* ¿Qué formatos de hash fueron crackeados?
-* ¿Qué tipos resistieron?
-
----
-
-#  **Parte 3 — Crackeo de un archivo ZIP**
-
-1. Extrae hash con `zip2john`:
-
-   ```bash
-   zip2john archivo.zip > zip.hash
-   ```
-
-2. Usa wordlist:
-
-   ```bash
-   john --wordlist=rockyou.txt zip.hash
-   ```
-
-### **Preguntas**
-
-* ¿Qué tan segura era la contraseña del ZIP?
-* ¿Cómo se podría mejorar su seguridad?
-
----
-
-#  **Parte 4 — Ataque de Fuerza Bruta (Incremental)**
-
-1. Ejecuta:
-
-   ```bash
-   john --incremental hashes_incremental.txt
-   ```
-
-2. Limita longitud:
-
-   ```bash
-   john --incremental=Digits --min-length=4 --max-length=6 hashes_incremental.txt
-   ```
-
-### **Preguntas**
-
-* ¿Qué impacto tiene la longitud en el tiempo de crackeo?
-* ¿Por qué este modo no es práctico para contraseñas largas?
-
----
-
-#  **Parte 5 — Ataque con Máscara (Mask Attack)**
-
-El equipo de redes te dice que una contraseña olvidada **tiene este patrón**:
-
-> dos letras minúsculas + tres números
-> (ejemplo: ab123)
-
-1. Ejecuta:
-
-   ```bash
-   john --mask='?l?l?d?d?d' hash_nuevo.txt
-   ```
-
-### **Preguntas**
-
-* ¿Qué ventaja tiene este ataque respecto al incremental?
-* ¿Por qué reduce drásticamente el tiempo?
-
----
-
-#  **Parte 6 — Reto Final**
-
-Los alumnos deben elegir el método adecuado para estos casos:
-
-| Archivo / Hash       | Pista                         | Objetivo                     |
-| -------------------- | ----------------------------- | ---------------------------- |
-| `wifi_wpa.hash`      | Contraseña de 8–10 caracteres | Seleccionar método óptimo    |
-| `ntlm_only.hash`     | Hash NTLM                     | Comparar wordlist vs máscara |
-| `documento.rar`      | Archivo protegido             | Extraer + crackear           |
-| `aplicacion_web.txt` | Hashes SHA-256                | Probar diccionario + reglas  |
-
-Pueden combinar modos, modificar máscaras o crear propias.
+PRÁCTICA – John The Ripper (JTR Jumbo)
 
 
+📘 Ejercicio 1 – Cracking de contraseñas de sistema (SHA‑512)
 
+Archivo: hashes_sistema.txt
+
+1.1
+
+Ejecuta John the Ripper con el modo automático para intentar crackear los hashes.
+¿Qué comando usas?
+
+1.2
+
+Muestra las contraseñas crackeadas.
+¿Qué comando usas?
+
+1.3
+
+¿Qué contraseñas aparecen como crackeadas?
+
+📘 Ejercicio 2 – Ataque de Diccionario (Wordlist)
+
+Archivo: hashes_wordlist.txt
+
+2.1
+
+Lanza John usando la wordlist rockyou.txt.
+¿Qué comando usas?
+
+2.2
+
+Muestra las contraseñas crackeadas.
+
+2.3
+
+Escribe las contraseñas descubiertas.
+
+📘 Ejercicio 3 – Fuerza Bruta (Incremental)
+
+Archivo: hashes_incremental.txt
+
+3.1
+
+Lanza un ataque incremental.
+
+3.2
+
+Muestra la contraseña encontrada.
+
+3.3
+
+Explica por qué este ataque suele ser más lento que el de diccionario.
+
+📘 Ejercicio 4 – Ataque por Máscara (Mask Mode)
+
+Archivo: hash_mask.txt
+Patrón conocido: 3 letras minúsculas + 1 número
+
+4.1
+
+Lanza un ataque con la máscara ?l?l?d?d.
+
+4.2
+
+Muestra la contraseña encontrada.
+
+📘 Ejercicio 5 – WPA‑PSK
+
+Archivo: wifi_wpa.hash
+
+5.1
+
+Lanza John sobre el hash WPA‑PSK.
+
+5.2
+
+Muestra la clave crackeada.
+
+📘 Ejercicio 6 – Hash NTLM (Windows)
+
+Archivo: ntlm_only.hash
+
+6.1
+
+Crackea el hash usando el formato NTLM.
+
+6.2
+
+Muestra la contraseña encontrada.
+
+📘 Ejercicio 7 – Cracking de un archivo RAR
+
+Archivo: documento.rar
+
+7.1
+
+Convierte el RAR a un archivo hash usando rar2john.
+
+7.2
+
+Crackea la contraseña del archivo RAR.
+
+7.3
+
+Muestra la contraseña encontrada.
+
+📘 Ejercicio 8 – Hash SHA‑256 (Aplicación Web)
+
+Archivo: aplicacion_web.sha256
+
+8.1
+
+Crackea el hash usando wordlist.
+
+8.2
+
+Muestra la contraseña crackeada.
