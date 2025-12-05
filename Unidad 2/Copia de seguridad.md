@@ -1,5 +1,5 @@
 
-# 💾 Copia de Seguridad de MySQL en Kali Linux (con `cron`)
+# 💾 Copia de Seguridad de MySQL/MariaDB en Kali Linux (con `cron`)
 
 ## 🧱 1. Instalar MySQL o MariaDB
 
@@ -93,7 +93,7 @@ Pega este contenido:
 USER="root"
 PASSWORD="tu_contraseña"
 BACKUP_DIR="/var/backups/mysql"
-DATE=$(date +%Y-%m-%d_%H-%M-%S)
+DATE=$(date +%Y-%m-%d_%H-%M-%S) # probar con ' '
 
 # Crear carpeta si no existe
 mkdir -p "$BACKUP_DIR"

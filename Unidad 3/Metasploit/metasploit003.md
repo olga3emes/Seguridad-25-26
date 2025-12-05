@@ -1,4 +1,4 @@
-Fase de reconocimiento pasivo
+# Fase de reconocimiento pasivo
 Dentro de la fase de reconocimiento pasivo, no es raro oír hablar de OSINT (Open Source INTelligence), un concepto que significa: «cualquier información obtenida a través de datos públicos». De hecho, el objetivo es obtener la máxima información posible sobre el perímetro objetivo, sin tener que hacer una conexión directa.
 
 1. Información de la empresa
@@ -175,6 +175,8 @@ Module options (auxiliary/gather/shodan_search):
   REGEX          .*      yes       Regex search for a specific  
 IP/City/Country/Hostname  
   SHODAN_APIKEY          yes       The SHODAN API key 
+
+  
 El uso del módulo de búsqueda Shodan facilita la explotación masiva. De hecho, en el caso de que un atacante descubra una vulnerabilidad en la versión 2.2.3 de Apache, Shodan le permitiría deshacerse rápidamente de todas las máquinas vulnerables en Internet:
 
 msf6 auxiliary(gather/shodan_search) > set DATABASE true  
@@ -234,6 +236,8 @@ address          info               comments
 50.57.195.17    (Red Hat)           Added from Shodan  
 50.116.13.107   (CentOS)            Added from Shodan  
 50.198.214.168  (CentOS)            Added from Shodan 
+
+
 auxiliary/gather/shodan_honeyscore
 
 Como parte de las pruebas de intrusión en un perímetro amplio, es posible que el equipo defensivo haya implementado medios de protección, como los honeypots.

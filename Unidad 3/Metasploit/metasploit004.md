@@ -1,4 +1,4 @@
-Fase de reconocimiento activo
+# Fase de reconocimiento activo
 En primer lugar, es necesario añadir una aclaración sobre el reconocimiento activo. El anonimato y el reconocimiento activo no tienen ninguna relación. El hecho de que un atacante se esconda detrás de un servidor proxy o una red de anonimato como TOR no significa que sus acciones no se consideren activas.
 
 1. La fase de escaneo
@@ -197,7 +197,7 @@ Mientras que el módulo utilizado para forzar el servicio SSH es auxiliary/scann
 images/07EP02.png
 Volveremos al módulo auxiliary/scanner/ssh/ssh_login en la sección SSH (22/TCP) de este capítulo.
 
-3. FTP (21/TCP)
+3. FTP (21/TCP)s
 FTP (File Transfer Protocol) es uno de los protocolos más populares para compartir archivos entre múltiples clientes y un servidor. Este protocolo, que por defecto escucha en el puerto 21/TCP, no garantiza la confidencialidad o integridad de los datos transmitidos.
 
 Hay varios módulos que permiten obtener información sobre el servicio FTP:
